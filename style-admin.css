@@ -1,0 +1,14 @@
+select[readonly] {
+  background: #eee;
+  /*Simular campo inativo - Sugestão @GabrielRodrigues*/
+  pointer-events: none;
+  touch-action: none;
+}
+
+.containe-flex {
+  display: flex;
+}
+
+.sub {
+  text-align: center;
+}
