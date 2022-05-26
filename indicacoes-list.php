@@ -4,6 +4,7 @@ function indicacoes_list() {
 
     if (isset($_GET['sync'])) {
         $teste =  shell_exec("cd  ". $_SERVER['DOCUMENT_ROOT'] . "/wp-content/plugins/indicacoes/ && ./teste-linux");
+        echo $teste;
     }
 
     $arquivo = file_get_contents($_SERVER['DOCUMENT_ROOT'] .'/wp-content/plugins/indicacoes/data.json');
@@ -44,7 +45,9 @@ $(document).ready(function() {
     <h2>Publicações</h2>
     <div class="tablenav top">
         <div class="alignleft actions">
+            <!--
             <a href="<?php echo admin_url('admin.php?page=indicacoes_create'); ?>" class="button">Adicionar</a>
+            -->
             <a href="<?php echo admin_url('admin.php?page=indicacoes_list&sync=active'); ?>"
                 class="button">Sincronizar</a>
         </div>

@@ -171,10 +171,10 @@ select[readonly] {
                         </fieldset>
                     </div>
                     <div id="major-publishing-actions">
-                        <div id="delete-action">
+                        <!-- <div id="delete-action">
                             <input type='submit' name="delete" value='Excluir' class='button'
                                 onclick="return confirm('Deseja Realmente Excluir?')">
-                        </div>
+                        </div> -->
                         <div id="publishing-action">
                             <input type='submit' name="update" value='Salvar'
                                 class='button button-primary button-large'>
@@ -237,7 +237,6 @@ select[readonly] {
                                 <tr class="tr-andamento-<?= $ka; ?>" id="tr-andamento-<?= $ka; ?>-<?= $ks; ?>">
                                     <td class="origem" data-name="origem" data-type='text'
                                         data-pk="col-<?= $ka; ?>-<?= $ks; ?>">
-
                                         <?= $sub->origem; ?>
                                     </td>
                                     <td class="destino" data-name="destino" data-type='text'
@@ -310,7 +309,6 @@ select[readonly] {
 <script>
 $(document).ready(function() {
 
-
     function edit_col(container, coluna, url, titulo, tipo) {
         $.fn.editable.defaults.mode = tipo;
 
@@ -331,7 +329,8 @@ $(document).ready(function() {
             obj.format = 'yyyy-mm-dd';
             obj.viewformat = 'dd/mm/yyyy';
             obj.datepicker = {
-                weekStart: 1
+                weekStart: 1,
+                maxDate: 0
             }
         }
 
@@ -395,7 +394,8 @@ $(document).ready(function() {
         var titulo = $('#titulo');
         var data = $('#data');
 
-        var isoDateString = new Date(data.val()).toISOString();
+        var isoDateString = new Date(formatUs(data.val())).toISOString();
+        console.log(isoDateString);
         var obj = {
             'origem': origem.val(),
             'destino': destino.val(),
@@ -439,7 +439,8 @@ $(document).ready(function() {
 
     $(function() {
         $(".data").datepicker({
-            dateFormat: 'dd/mm/yy'
+            dateFormat: 'dd/mm/yy',
+            maxDate:0
         });
     });
 
@@ -469,6 +470,18 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('.data').blur(function(){
+        var strdate = $(this).val();
+        if(strdate != ''){
+            var date1 = new Date(formatUs(strdate));
+            var date2 = new Date();
+            if(date1 > date2){
+                $(this).val('');
+            }
+        }
+    });
+
 });
 
 function mascaraData(campo, e) {
@@ -483,6 +496,14 @@ function mascaraData(campo, e) {
         } else
             campo.value = data;
     }
+}
+
+function formatUs(data) {
+  var dia  = data.split("/")[0];
+  var mes  = data.split("/")[1];
+  var ano  = data.split("/")[2];
+
+  return ano + '-' + ("0"+mes).slice(-2) + '-' + ("0"+dia).slice(-2);
 }
 </script>
 
